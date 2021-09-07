@@ -224,7 +224,7 @@ const Home = (props) => {
     createEraserControl().addTo(map.current)
     createPenControl().addTo(map.current)
     createCursorControl().addTo(map.current)
-    createAvatarControl(props.user.username).addTo(map.current)
+    // createAvatarControl(props.user.username).addTo(map.current)
   }
 
   const initEvents = () => {

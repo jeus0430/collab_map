@@ -522,6 +522,7 @@ th img {
   padding-left: 20px;
   padding-right: 20px;
 }
+
 .tool {
   vertical-align: middle;
   display: inline-block;
@@ -780,6 +781,10 @@ th img {
 /* Hide default leaflet attribution, it's not a great place for it */
 .leaflet-control-attribution {
   display: none;
+}
+
+.leaflet-bottom.leaflet-left .leaflet-control {
+  float: none;
 }
 /* Change cursor when mousing over clickable layer */
 .leaflet-clickable {
@@ -1041,4 +1046,19 @@ h3 img {
   margin-top: 40px;
   border: 1px solid #eaf2f58c;
   border-radius: 5px;
+}
+
+.leaflet-bottom.leaflet-left {
+  position: absolute;
+  left: calc(calc(83% - 338px) / 2);
+  transform: translateX(calc(-50% + 338px));
+  height: 48px;
+  background-color: #fff;
+  border-radius: 5px;
+  bottom: 11px;
+  z-index: 99999;
+  vertical-align: middle;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 -1px 0px rgb(0 0 0 / 2%);
+  padding-left: 20px;
+  padding-right: 20px;
 }

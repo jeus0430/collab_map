@@ -35,6 +35,7 @@ const Home = (props) => {
   const dangerColor = useRef("#dc3545")
   const warningColor = useRef("#ffc107")
   const infoColor = useRef("#17a2b8")
+  const toolbarDiv = useRef(null)
   const [socketLoaded, setSocketLoaded] = useState(false)
 
   // const [insts, setInsts] = useState([])
@@ -1095,14 +1096,14 @@ const Home = (props) => {
   return (
     <>
       {/* <div fluid="true" className="map-container"></div>  */}
-      <div className="row" style={{ margin: 0 }}>
+      <div style={{ margin: 0, width: "100%" }}>
         {/* <div style={{ position: "absolute", zIndex: 12345, width: "100%" }}>
           <NavBar user = { getCurrentUser().username }/>
         </div> */}
-        <div className="col-md-2">
+        <div id="sidebar">
           {instances.length > 1 && <SideBar instances={instances} />}
         </div>
-        <div className="col-md-10" id="mapDiv"></div>
+        <div id="mapDiv"></div>
       </div>
     </>
   )

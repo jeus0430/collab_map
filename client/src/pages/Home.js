@@ -35,6 +35,8 @@ const Home = (props) => {
   const dangerColor = useRef("#dc3545")
   const warningColor = useRef("#ffc107")
   const infoColor = useRef("#17a2b8")
+  const [socketLoaded, setSocketLoaded] = useState(false)
+
   // const [insts, setInsts] = useState([])
   // const [clientName, setClientName] = useState(null)
   // const [clients, setClients] = useState([])
@@ -43,19 +45,33 @@ const Home = (props) => {
   // const [enteringdata, setenteringdata] = useState(false)
   // const [dataloaded, setdataloaded] = useState(false)
   // const [cursors, setcursors] = useState([])
+
   const [instances, setInstances] = useState([])
   const [activeUsers, setActiveUsers] = useState([])
 
+  const waitForOpenConnection = () => {
+    return new Promise((resolve, reject) => {
+      const intervalTime = 200 //ms
+
+      const interval = setInterval(async () => {
+        if (socket.current.connected) {
+          setSocketLoaded(true)
+          clearInterval(interval)
+          if (!map.current) {
+            initMap()
+            initToolbar()
+            initEvents()
+            // const { data } = await axios.get(`${API}/inst/all`)
+            // importInsts(data)
+          }
+          resolve()
+        }
+      }, intervalTime)
+    })
+  }
+
   useEffect(() => {
     ;(async () => {
-      if (!map.current) {
-        initMap()
-        initToolbar()
-        initEvents()
-        // const { data } = await axios.get(`${API}/inst/all`)
-        // importInsts(data)
-      }
-
       if (!socket.current) {
         socket.current = io(`${config.SERVER_URL}/collaborate`, {
           query: { client: props.room, _token: localStorage.getItem("_token") },
@@ -68,10 +84,7 @@ const Home = (props) => {
           socket.current.emit("one-joined-room", props.user.username)
         })
 
-        socket.current.on("other-joined-room", (active) => {
-          setActiveUsers(active)
-          console.log("active", active)
-        })
+        await waitForOpenConnection()
 
         socket.current.on("logout", () => {
           console.log("logout recieved")

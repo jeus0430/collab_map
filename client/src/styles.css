@@ -1,8 +1,8 @@
 :root {
   --text-black: #222222;
-  --text-grey: #626C72;
-  --hover-grey: #F7F7F7;
-  --border: #E8E8E8;
+  --text-grey: #626c72;
+  --hover-grey: #f7f7f7;
+  --border: #e8e8e8;
 }
 body {
   box-sizing: border-box;
@@ -12,7 +12,7 @@ body {
   position: absolute;
   z-index: 9999999;
   background-color: var(--text-black);
-  opacity: .4;
+  opacity: 0.4;
   top: 0px;
   left: 0px;
   width: 100%;
@@ -27,7 +27,7 @@ body {
   top: 0px;
   bottom: 0px;
   height: 190px;
-  background-color: #FFF;
+  background-color: #fff;
   border-radius: 5px;
   font-size: 5px;
   width: 480px;
@@ -54,8 +54,8 @@ body {
   height: 45px;
   line-height: 45px;
   border-radius: 5px;
-  background-color: #FFF;
-  border: 1px solid #E7EAEC;
+  background-color: #fff;
+  border: 1px solid #e7eaec;
   box-sizing: border-box;
   box-shadow: 0px 1px 2px rgba(53, 87, 98, 0.1);
   text-align: center;
@@ -73,10 +73,10 @@ body {
   line-height: 45px;
   border-radius: 5px;
   background-color: var(--text-black);
-  border: 1px solid #E7EAEC;
+  border: 1px solid #e7eaec;
   box-sizing: border-box;
   text-align: center;
-  color: #FFF;
+  color: #fff;
   font-family: Inter;
   font-weight: 700;
   font-size: 14px;
@@ -93,10 +93,10 @@ body {
 }
 #google-signin:hover {
   cursor: pointer;
-  background-color: var(--hover-grey)!important;
+  background-color: var(--hover-grey) !important;
 }
 .signin {
-  visibility: visible!important;
+  visibility: visible !important;
 }
 /* Share popup */
 #share {
@@ -109,7 +109,7 @@ body {
   width: 480px;
   height: 135px;
   border-radius: 5px;
-  background-color: #FFF;
+  background-color: #fff;
   z-index: 99999999;
   visibility: hidden;
 }
@@ -133,7 +133,7 @@ body {
 }
 #close-share:hover {
   cursor: pointer;
-  opacity: .6;
+  opacity: 0.6;
 }
 #share input {
   border: 1px solid var(--border);
@@ -153,7 +153,7 @@ body {
 #share-copy {
   background-color: var(--text-black);
   border-radius: 5px;
-  color: #FFF;
+  color: #fff;
   text-align: center;
   height: 39px;
   line-height: 39px;
@@ -170,24 +170,24 @@ body {
 }
 #share-copy:hover {
   cursor: pointer;
-  opacity: .6;
+  opacity: 0.6;
 }
 .share-show {
-  visibility: visible!important;
+  visibility: visible !important;
 }
 /* Left sidebar */
 #sidebar {
-  background-color: #FFF;
+  background-color: #fff;
   width: 100%;
   height: 100%;
-  border: 1px solid #E8E8E8;
+  border: 1px solid #e8e8e8;
   position: absolute;
   left: 0px;
   top: 0px;
 }
 /* Main styles for sidebar */
 .section {
-  border-bottom: 1px solid #E8E8E8;
+  border-bottom: 1px solid #e8e8e8;
   padding: 10px;
 }
 .section-name {
@@ -225,8 +225,8 @@ th img {
   font-weight: 600;
   font-size: 15px;
   overflow: auto;
-  color: var(--text-black)!important;
-  -webkit-text-fill-color: var(--text-black)!important;
+  color: var(--text-black) !important;
+  -webkit-text-fill-color: var(--text-black) !important;
   opacity: 1;
   border: 0px;
   text-indent: 0px;
@@ -238,7 +238,7 @@ th img {
   width: 100%;
 }
 .map-editing {
-  border-bottom: 2px solid #E8E8E8!important;
+  border-bottom: 2px solid #e8e8e8 !important;
 }
 #map-description {
   font-family: Inter;
@@ -267,7 +267,7 @@ th img {
   left: 348px;
   z-index: 99999;
   top: 12px;
-  background-color: #FFF;
+  background-color: #fff;
   border-radius: 5px;
   border: 1px solid var(--border);
   visibility: hidden;
@@ -282,7 +282,7 @@ th img {
   line-height: 40px;
   text-decoration: none;
   display: block;
-  color: var(--text-black)!important;
+  color: var(--text-black) !important;
 }
 .more-item:first-child {
   border-bottom: 1px solid var(--border);
@@ -292,7 +292,7 @@ th img {
   cursor: pointer;
 }
 .menu-show {
-  visibility: visible!important;
+  visibility: visible !important;
 }
 /* Annotation section */
 #annotations-section {
@@ -301,7 +301,7 @@ th img {
 }
 #annotations-header {
   position: sticky;
-  background-color: #FFF;
+  background-color: #fff;
   top: -18px;
   padding-top: 18px;
   margin-top: -18px;
@@ -318,7 +318,7 @@ th img {
 }
 #hide-annotations:hover {
   cursor: pointer;
-  opacity: .6;
+  opacity: 0.6;
 }
 /* Annotation list */
 .annotation-item {
@@ -349,7 +349,7 @@ th img {
   display: inline-block;
 }
 .annotation-focus {
-  font-weight: 700!important;
+  font-weight: 700 !important;
 }
 .annotation-item img {
   vertical-align: middle;
@@ -370,17 +370,17 @@ th img {
 }
 .delete-layer:hover {
   cursor: pointer;
-  opacity: .6;
+  opacity: 0.6;
 }
 .annotation-item:hover .delete-layer {
-  visibility: visible!important;
+  visibility: visible !important;
 }
 .arrow-open {
   transform: rotate(90deg);
 }
 /* Collapsible part of the annotation */
 .annotation-closed {
-  display: none!important;
+  display: none !important;
 }
 .annotation-details {
   padding-left: 43px;
@@ -424,18 +424,18 @@ th img {
 }
 
 /* Map */
-#mapDiv {
+/* #mapDiv {
   position: absolute;
   left: calc(17%);
   height: 100%;
   width: calc(83%);
   top: 0px;
   box-sizing: border-box;
-}
+} */
 
 /* Observation mode */
 #outline {
-  z-index: 999999!important;
+  z-index: 999999 !important;
   position: absolute;
   left: 338px;
   height: 100%;
@@ -449,7 +449,7 @@ th img {
 #observing-name {
   height: 28px;
   line-height: 28px;
-  color: #FFF;
+  color: #fff;
   font-family: Inter;
   font-weight: 500;
   font-size: 14px;
@@ -461,7 +461,7 @@ th img {
   z-index: 99999999;
 }
 .observing {
-  visibility: visible!important;
+  visibility: visible !important;
 }
 
 /* Search box */
@@ -480,7 +480,7 @@ th img {
 }
 #search-box img:hover {
   cursor: pointer;
-  opacity: .6;
+  opacity: 0.6;
 }
 #search-input {
   border: 0px;
@@ -505,7 +505,7 @@ th img {
   width: 20px;
 }
 ::placeholder {
-  color: #A1AAAF;
+  color: #a1aaaf;
 }
 /* Drawing tools */
 #drawing-controls {
@@ -513,7 +513,7 @@ th img {
   left: calc(calc(100% - 338px) / 2);
   transform: translateX(calc(-50% + 338px));
   height: 48px;
-  background-color: #FFF;
+  background-color: #fff;
   border-radius: 5px;
   bottom: 11px;
   z-index: 99999;
@@ -529,39 +529,39 @@ th img {
   margin-right: 15px;
 }
 .tool img {
-  opacity: .4;
+  opacity: 0.4;
   width: 23px;
-  transition: opacity .1s cubic-bezier(.05,.03,.35,1);
+  transition: opacity 0.1s cubic-bezier(0.05, 0.03, 0.35, 1);
 }
 .tool img:hover {
   cursor: pointer;
   opacity: 1;
 }
 .tool:hover {
-  cursor: pointer!important;
+  cursor: pointer !important;
 }
 .tool-active img {
-  opacity: 1!important;
+  opacity: 1 !important;
 }
 /* Color picker */
 #color-picker {
   width: 25px;
   height: 25px;
   border-radius: 50%;
-  border: 1px solid #EAEAEA;
+  border: 1px solid #eaeaea;
   box-sizing: border-box;
   text-align: center;
   display: inline-block;
   vertical-align: middle;
   margin-top: 12px;
-  transition: border-color .35s cubic-bezier(.05,.03,.35,1);
+  transition: border-color 0.35s cubic-bezier(0.05, 0.03, 0.35, 1);
 }
 #color-picker:hover {
-  border-color: #C8C8C8!important;
+  border-color: #c8c8c8 !important;
   cursor: pointer;
 }
 #inner-color {
-  background-color: #624EEF;
+  background-color: #624eef;
   border-radius: 50%;
   text-align: center;
   height: 17px;
@@ -573,9 +573,9 @@ th img {
   position: absolute;
   margin-top: -85px;
   height: 40px;
-  background-color: #FFF;
+  background-color: #fff;
   border-radius: 5px;
-  border: 1px solid #EAEAEA;
+  border: 1px solid #eaeaea;
   padding-left: 10px;
   transform: translateX(-50%);
   margin-left: 15.5px;
@@ -583,41 +583,49 @@ th img {
   visibility: hidden;
 }
 .color-enabled {
-  visibility: visible!important;
+  visibility: visible !important;
 }
 .color {
   width: 20px;
   height: 20px;
-  background-color: #624EEF;
+  background-color: #624eef;
   display: inline-block;
   margin-right: 10px;
   border-radius: 50%;
   margin-top: 10px;
 }
 /* Should probably do this programmatically... */
-#color1, .colorEC1D43 {
-  background: #EC1D43!important;
+#color1,
+.colorEC1D43 {
+  background: #ec1d43 !important;
 }
-#color2, .colorEC811D {
-  background: #EC811D!important;
+#color2,
+.colorEC811D {
+  background: #ec811d !important;
 }
-#color3, .colorECBE1D {
-  background: #ECBE1D!important;
+#color3,
+.colorECBE1D {
+  background: #ecbe1d !important;
 }
-#color4, .colorB6EC1D {
-  background: #B6EC1D!important;
+#color4,
+.colorB6EC1D {
+  background: #b6ec1d !important;
 }
-#color5, .color1DA2EC {
-  background: #1DA2EC!important;
+#color5,
+.color1DA2EC {
+  background: #1da2ec !important;
 }
-#color6, .color781DEC {
-  background: #781DEC!important;
+#color6,
+.color781DEC {
+  background: #781dec !important;
 }
-#color7, .colorCF1DEC {
-  background: #CF1DEC!important;
+#color7,
+.colorCF1DEC {
+  background: #cf1dec !important;
 }
-#color8, .color222222 {
-  background: #222222!important;
+#color8,
+.color222222 {
+  background: #222222 !important;
 }
 /* Tooltip */
 #tooltip {
@@ -626,7 +634,7 @@ th img {
   padding-right: 10px;
   height: 30px;
   line-height: 30px;
-  color: #FFF;
+  color: #fff;
   text-align: center;
   font-family: Inter;
   font-weight: 100;
@@ -659,7 +667,7 @@ th img {
   height: 48px;
   padding-left: 20px;
   padding-right: 20px;
-  color: #FFF;
+  color: #fff;
   background: black;
   text-align: center;
   line-height: 48px;
@@ -672,13 +680,13 @@ th img {
 }
 #share-button:hover {
   cursor: pointer;
-  opacity: .6;
+  opacity: 0.6;
 }
 #profile {
   width: 35px;
   height: 35px;
   border-radius: 5px;
-  background-color: #781DEC;
+  background-color: #781dec;
   background-image: url("https://randomuser.me/api/portraits/women/42.jpg");
   background-size: 35px 35px;
   display: inline-block;
@@ -687,7 +695,7 @@ th img {
   line-height: 35px;
   overflow: hidden;
   text-align: center;
-  color: #FFF;
+  color: #fff;
   line-height: 35px;
   font-size: 14px;
   font-family: Inter;
@@ -726,7 +734,7 @@ th img {
   height: 45px;
   line-height: 45px;
   border-radius: 5px;
-  background-color: #FFF;
+  background-color: #fff;
   box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 -1px 0px rgb(0 0 0 / 2%);
   z-index: 999999;
   text-align: center;
@@ -745,12 +753,13 @@ th img {
   right: 11px;
   bottom: 11px;
   border-radius: 5px;
-  background-color: #FFF;
+  background-color: #fff;
   width: 45px;
   z-index: 999999;
   box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 -1px 0px rgb(0 0 0 / 2%);
 }
-#zoom-in, #zoom-out {
+#zoom-in,
+#zoom-out {
   height: 45px;
   line-height: 45px;
   text-align: center;
@@ -763,7 +772,8 @@ th img {
 #zoom-out {
   border-radius: 0px 0px 5px 5px;
 }
-#zoom-in:hover, #zoom-out:hover {
+#zoom-in:hover,
+#zoom-out:hover {
   cursor: pointer;
   background: var(--hover-grey);
 }
@@ -778,22 +788,23 @@ th img {
 /* Change cursor when over entire map */
 .leaflet-container {
   /* cursor: crosshair !important; */
-  width: 100%;
-  height: 96vh;
+  /* width: 100%; */
+  height: 100vh;
 }
 /* Misc Leaflet overrides */
 .hints {
-  pointer-events: none!important;
+  pointer-events: none !important;
 }
 .leaflet-div-icon {
-  background: transparent!important;
-  border: none!important;
+  background: transparent !important;
+  border: none !important;
 }
 .leaflet-marker-pane {
   z-index: 100000;
   pointer-events: none;
 }
-.leaflet-overlay-pane, .leaflet-overlay-pane img {
+.leaflet-overlay-pane,
+.leaflet-overlay-pane img {
   z-index: 99999;
 }
 .leaflet-overlay-pane canvas {
@@ -803,50 +814,50 @@ th img {
   z-index: 100001;
 }
 .leaflet-marker-icon {
-  pointer-events: all!important;
+  pointer-events: all !important;
 }
 .tooltip-off {
-  visibility: hidden!important;
+  visibility: hidden !important;
 }
 .leaflet-tooltip {
-  background-color: rgba(0,0,0,.6);
+  background-color: rgba(0, 0, 0, 0.6);
   border-radius: 5px;
-  border: 0px!important;
-  color: #FFF;
+  border: 0px !important;
+  color: #fff;
   font-weight: bold;
-  box-shadow: none!important;
+  box-shadow: none !important;
   outline: none;
-  opacity: 1!important;
-  pointer-events: auto!important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
 }
 .leaflet-tooltip:before {
-  border: 0px!important
+  border: 0px !important;
 }
 .gm-style .gm-style-iw-t::after {
   background: none;
 }
 .gm-style-iw {
-  box-shadow: none!important;
-  background: #EC1D43!important;
-  color: #FFF!important;
+  box-shadow: none !important;
+  background: #ec1d43 !important;
+  color: #fff !important;
 }
 .gm-style-iw button {
-  display: none!important;
+  display: none !important;
 }
 .gm-style .gm-style-iw-c {
   padding: 0px;
-  transform: none!important;
+  transform: none !important;
 }
 .gm-style-iw-d {
-  overflow: hidden!important;
+  overflow: hidden !important;
 }
 .gm-style-iw .gm-style-iw-c {
-  max-width: none!important;
-  max-height: none!important;
-  border-radius: 5px!important;
+  max-width: none !important;
+  max-height: none !important;
+  border-radius: 5px !important;
 }
 .gm-style .gm-style-iw-c {
-  border-radius: 5px!important;
+  border-radius: 5px !important;
 }
 /* This hides the warning when running the Firebase emulator locally */
 div.firebase-emulator-warning {
@@ -854,7 +865,7 @@ div.firebase-emulator-warning {
 }
 /* User cursors */
 .cursoricon {
-  z-index: 9999!important
+  z-index: 9999 !important;
 }
 .cursor-label {
   padding: 6px;
@@ -863,14 +874,15 @@ div.firebase-emulator-warning {
 }
 /* Popup for naming markers, lines, and areas */
 .create-shape-flow {
-  background-color: #FFF;
-  box-shadow: 0px 2px 20px rgb(0 0 0 / 7%), 0px -1px 20px rgb(0 0 0 / 2%)!important;
+  background-color: #fff;
+  box-shadow: 0px 2px 20px rgb(0 0 0 / 7%), 0px -1px 20px rgb(0 0 0 / 2%) !important;
   padding: 15px;
   width: 250px;
-  pointer-events: all!important
+  pointer-events: all !important;
 }
-.create-shape-flow input, .create-shape-flow textarea {
-  border: 1px solid #E8E8E8;
+.create-shape-flow input,
+.create-shape-flow textarea {
+  border: 1px solid #e8e8e8;
   box-sizing: border-box;
   border-radius: 5px;
   height: 33px;
@@ -885,7 +897,7 @@ div.firebase-emulator-warning {
 }
 .create-shape-flow button {
   background: #222222;
-  color: #FFF;
+  color: #fff;
   border: none;
   font-family: Inter;
   height: 35px;
@@ -897,7 +909,7 @@ div.firebase-emulator-warning {
 }
 .create-shape-flow button:hover {
   cursor: pointer;
-  opacity: .6;
+  opacity: 0.6;
 }
 .arrow-down {
   width: 0;
@@ -920,22 +932,24 @@ div.firebase-emulator-warning {
   float: right;
   margin-top: 5px;
 }
-.save-button, .save-button-place {
+.save-button,
+.save-button-place {
   background: #222222;
-  color: #FFF;
+  color: #fff;
   float: right;
   vertical-align: middle;
 }
-.cancel-button, .cancel-button-place {
-  background: #E8E8E8!important;
-  color: #626C72!important;
-  margin-right: 9px!important;
+.cancel-button,
+.cancel-button-place {
+  background: #e8e8e8 !important;
+  color: #626c72 !important;
+  margin-right: 9px !important;
 }
 #shape-desc {
   height: 100px;
 }
 label {
-  color: #626C72;
+  color: #626c72;
   font-family: Inter;
   font-weight: 400;
   margin-bottom: 7px;
@@ -951,13 +965,13 @@ h1 {
   white-space: initial;
 }
 h2 {
-  color: #626C72;
+  color: #626c72;
   font-family: Inter;
   font-size: 13px;
   font-weight: 500;
 }
 h3 {
-  color: #626C72;
+  color: #626c72;
   font-size: 13px;
   font-family: Inter;
   font-weight: 500;
@@ -982,22 +996,20 @@ h3 img {
 /* Used to prevent selecting images and whatnot */
 .noselect {
   -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-     -khtml-user-select: none; /* Konqueror HTML */
-       -moz-user-select: none; /* Old versions of Firefox */
-        -ms-user-select: none; /* Internet Explorer/Edge */
-            user-select: none; /* Non-prefixed version, currently
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome, Edge, Opera and Firefox */
 }
 /*----------- from majd ----------------*/
-.map-container
-{
+.map-container {
   padding-left: 0 !important;
   padding-right: 0 !important;
 }
 
-.nearby-item
-{
+.nearby-item {
   font-family: Inter;
   font-weight: 500;
   font-size: 12px;
@@ -1009,24 +1021,21 @@ h3 img {
   padding-bottom: 10px;
 }
 
-.container{
+.container {
   width: 450px;
 }
 
-.btn-part
-{
+.btn-part {
   padding: 20px;
   text-align: center;
 }
-.login-btn
-{
-    color: white;
-    background-color: #1d8def;
-    border: 0px;
-    width: 80px;
+.login-btn {
+  color: white;
+  background-color: #1d8def;
+  border: 0px;
+  width: 80px;
 }
-.pan
-{
+.pan {
   padding: 30px;
   background-color: aliceblue;
   margin-top: 40px;

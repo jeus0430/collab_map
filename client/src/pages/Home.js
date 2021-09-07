@@ -1094,25 +1094,15 @@ const Home = (props) => {
 
   return (
     <>
-      {/* <Container fluid>
-            <Row>
-              <Col sm={2}>
-              </Col>
-              <Col sm={10} style={{ paddingRight: 5 }}>
-              </Col>
-              </Row>
-            </Container> */}
-
       {/* <div fluid="true" className="map-container"></div>  */}
-      <div className="row">
-        <div style={{ position: "absolute", zIndex: 12345, width: "100%" }}>
-          {/* <NavBar user = { getCurrentUser().username }/> */}
+      <div className="row" style={{ margin: 0 }}>
+        {/* <div style={{ position: "absolute", zIndex: 12345, width: "100%" }}>
+          <NavBar user = { getCurrentUser().username }/>
+        </div> */}
+        <div className="col-md-2">
+          {instances.length > 1 && <SideBar instances={instances} />}
         </div>
         <div className="col-md-10" id="mapDiv"></div>
-        <div className="col-md-2 mt-5 ml-2 mr-5">
-          {" "}
-          {instances.length > 1 && <SideBar instances={instances} />}{" "}
-        </div>
       </div>
     </>
   )

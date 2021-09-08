@@ -103,34 +103,31 @@ const Home = (props) => {
           console.log(`got ${event}`)
         })
 
-        socket.current.on(
-          "other-created-marker",
-          (latlngs, instID, name, desc) => {
-            var arr = JSON.parse(latlngs)
-            importMarker(arr, instID, name, desc)
-          }
-        )
-        socket.current.on(
-          "other-created-pencil",
-          (latlngs, name, desc, instID) => {
-            var points = JSON.parse(latlngs)
-            importPencil(points, name, desc, instID)
-          }
-        )
-        socket.current.on(
-          "other-created-path",
-          (latlngs, name, desc, instID) => {
-            var points = JSON.parse(latlngs)
-            importPath(points, name, desc, instID)
-          }
-        )
-        socket.current.on(
-          "other-created-area",
-          (latlngs, name, desc, instID) => {
-            var points = JSON.parse(latlngs)
-            importArea(points, name, desc, instID)
-          }
-        )
+        socket.current.on("other-created-marker", (inst) => {
+          const { info, instID, name, desc, center, vicinity } = inst
+          var arr = JSON.parse(info)
+          importMarker(arr, instID, name, desc, vicinity)
+          setInstances((prev) => [...prev, inst])
+        })
+        // latlngs, name, desc, instID, center
+        socket.current.on("other-created-pencil", (inst) => {
+          const { info, name, desc, instID, center } = inst
+          var points = JSON.parse(info)
+          importPencil(points, name, desc, instID)
+          setInstances((prev) => [...prev, inst])
+        })
+        socket.current.on("other-created-path", (inst) => {
+          const { info, name, desc, instID, center } = inst
+          var points = JSON.parse(info)
+          importPath(points, name, desc, instID)
+          setInstances((prev) => [...prev, inst])
+        })
+        socket.current.on("other-created-area", (inst) => {
+          const { info, name, desc, instID } = inst
+          var points = JSON.parse(info)
+          importPath(points, name, desc, instID)
+          setInstances((prev) => [...prev, inst])
+        })
         socket.current.on("other-erased-instance", (instID) => {
           var inst = objects.current.filter(function (result) {
             return result.id === instID
@@ -154,6 +151,11 @@ const Home = (props) => {
           const lng = Math.round(event.latlng.lng * 100000) / 100000
           socket.current.emit("one-moved-mouse", lat, lng, props.user.username)
           // socket.current.emit("one-moved-mouse", lat, lng, nonce.current)
+        })
+
+        socket.current.on("my-created-inst", (inst) => {
+          console.log("1231231231")
+          setInstances((prev) => [...prev, inst])
         })
       }
     })()
@@ -205,7 +207,7 @@ const Home = (props) => {
       opacity: 0,
     })
       .bindTooltip("", {
-        permanent: true,
+        permanent: false,
         offset: [5, 25],
         sticky: true,
         className: "hints",
@@ -574,6 +576,10 @@ const Home = (props) => {
       map.current.panTo(cursorLatLng)
     }
   }
+  const trackInst = (center) => {
+    console.log('++++++++++++', center)
+    map.current.panTo(center)
+  }
   const pathTool = () => {
     const path_tool = L.DomUtil.get("path-tool")
     resetTool()
@@ -736,7 +742,9 @@ const Home = (props) => {
           name +
           "</h1><h2>" +
           desc +
-          '</h2><div class="shape-data"><h3><img src="collab/marker-small-icon.svg">' +
+          '</h2><div class="shape-data"><h3><img src="' +
+          process.env.PUBLIC_URL +
+          '/collab/marker-small-icon.svg">' +
           inst.marker.getLatLng().lat.toFixed(5) +
           ", " +
           inst.marker.getLatLng().lng.toFixed(5) +
@@ -826,12 +834,14 @@ const Home = (props) => {
       name: name,
       desc: desc,
     })
+    var centerPoint = inst.line.getBounds().getCenter()
     socket.current.emit(
       "one-created-pencil",
       JSON.stringify(inst.line.getLatLngs()),
       name,
       desc,
-      nextID
+      nextID,
+      JSON.stringify(centerPoint)
     )
   }
 
@@ -846,34 +856,36 @@ const Home = (props) => {
       name: name,
       desc: desc,
     })
+    var centerPoint = inst.line.getBounds().getCenter()
     socket.current.emit(
       "one-created-path",
       JSON.stringify(inst.line.getLatLngs()),
       name,
       desc,
-      nextID
+      nextID,
+      JSON.stringify(centerPoint)
     )
   }
 
   const saveArea = (name, desc) => {
     var inst = currentInst.current
-
-    const nextID = getNextId()
-    console.log("next id geberated", nextID)
-
+    var nextID = getNextId()
     bindErasingAction(inst.line, nextID)
+
     objects.current.push({
       id: nextID,
       line: inst.line,
       name: name,
       desc: desc,
     })
+    var centerPoint = inst.line.getBounds().getCenter()
     socket.current.emit(
       "one-created-area",
       JSON.stringify(inst.line.getLatLngs()),
       name,
       desc,
-      nextID
+      nextID,
+      JSON.stringify(centerPoint)
     )
   }
 
@@ -900,13 +912,13 @@ const Home = (props) => {
         name +
         "</h1><h2>" +
         desc +
-        '</h2><div class="shape-data"><h3><img src="collab/marker-small-icon.svg">' +
+        '</h2><div style="width: 250px;" class="shape-data"><h3><img src"=' +
+        process.env.PUBLIC_URL +
+        '/collab/marker-small-icon.svg"><span style="width: 220px;overflow-wrap: anywhere;">' +
         vicinity +
-        ", " +
-        info[1].toFixed(5) +
-        '</h3></div><div class="arrow-down"></div>',
+        '</span></h3></div><div class="arrow-down"></div>',
       {
-        permanent: false,
+        permanent: true,
         direction: "top",
         interactive: false,
         bubblingMouseEvents: false,
@@ -924,7 +936,7 @@ const Home = (props) => {
     })
   }
 
-  const importPencil = (points, name, desc, instID) => {
+  const importPencil = (points, name, desc, instID, center) => {
     var line = L.polyline(points, { color: primaryColor.current })
     // line.bindTooltip(
     //   "<h1>" +
@@ -1014,10 +1026,17 @@ const Home = (props) => {
   }
 
   const importInsts = (insts) => {
+    console.log(insts)
     for (let i = 0; i < insts.length; i++) {
       const inst = insts[i]
       if (inst.type == "pencil") {
-        importPencil(JSON.parse(inst.info), inst.name, inst.desc, inst.instID)
+        importPencil(
+          JSON.parse(inst.info),
+          inst.name,
+          inst.desc,
+          inst.instID,
+          inst.center
+        )
       } else if (inst.type == "path") {
         importPath(JSON.parse(inst.info), inst.name, inst.desc, inst.instID)
       } else if (inst.type == "area") {
@@ -1101,7 +1120,7 @@ const Home = (props) => {
           <NavBar user = { getCurrentUser().username }/>
         </div> */}
         <div id="sidebar">
-          {instances.length > 1 && <SideBar instances={instances} />}
+          {instances.length > 1 && <SideBar trackFunc={trackInst} instances={instances} />}
         </div>
         <div id="mapDiv"></div>
       </div>

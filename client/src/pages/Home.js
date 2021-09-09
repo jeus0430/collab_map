@@ -626,7 +626,7 @@ const Home = (props) => {
       toolbarEnabled.current = false
 
       inst.bindTooltip(
-        '<label for="shape-name">Name</label><input id="shape-name" name="shape-name" /><label for="shape-desc">Description</label><textarea id="shape-desc" name="description"></textarea><br><div id="buttons"><button class="cancel-button" id="cancel-button">Cancel</button><button class="save-button" id="save-button">Save</button></div><div class="arrow-down"></div>',
+        '<label for="shape-name">Name</label><input id="shape-name" placeholder="title" name="shape-name" /><label for="shape-desc">Description</label><textarea placeholder="description" id="shape-desc" name="description"></textarea><br><div id="buttons"><button class="cancel-button" id="cancel-button">Cancel</button><button class="save-button" id="save-button">Save</button></div><div class="arrow-down"></div>',
         {
           permanent: true,
           direction: "auto",

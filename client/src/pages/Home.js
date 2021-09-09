@@ -10,6 +10,7 @@ import crypto from "crypto"
 import { v5 as uuidv5, v4 as uuidv4 } from "uuid"
 import axios from "axios"
 import { useParams } from "react-router-dom"
+import Geocoder from "./Geocoder"
 
 const Home = (props) => {
   //   const currentLocation = [51.52, -0.09]
@@ -154,7 +155,6 @@ const Home = (props) => {
         })
 
         socket.current.on("my-created-inst", (inst) => {
-          console.log("1231231231")
           setInstances((prev) => [...prev, inst])
         })
       }
@@ -180,26 +180,6 @@ const Home = (props) => {
         noWrap: true,
       }
     ).addTo(thisMap)
-
-    /* 
-    
-        const geocoder = new MapboxGeocoder({
-          accessToken: mapboxToken,
-          mapboxgl: mapboxgl, 
-          zoom: 9
-        });
-        // geocoder.addTo(map.current)
-      
-    
-        L.Control.geocoder({
-        position: 'topright',
-        collapsed: false,
-        placeholder: 'Search...',
-        defaultMarkGeocode: true,
-        geocoder: geocoder
-      });
-    
-      */
 
     let thisfollowCursor = L.marker([0, 0], {
       pane: "overlayPane",
@@ -227,6 +207,11 @@ const Home = (props) => {
     createEraserControl().addTo(map.current)
     createPenControl().addTo(map.current)
     createCursorControl().addTo(map.current)
+    map.current.addControl(Geocoder)
+    map.current.on("geosearch/showlocation", (e) => {
+      console.log(e)
+      map.current.panTo([e.location.x, e.location.y])
+    })
     // createAvatarControl(props.user.username).addTo(map.current)
   }
 
@@ -577,7 +562,7 @@ const Home = (props) => {
     }
   }
   const trackInst = (center) => {
-    console.log('++++++++++++', center)
+    console.log("++++++++++++", center)
     map.current.panTo(center)
   }
   const pathTool = () => {
@@ -1120,7 +1105,9 @@ const Home = (props) => {
           <NavBar user = { getCurrentUser().username }/>
         </div> */}
         <div id="sidebar">
-          {instances.length > 1 && <SideBar trackFunc={trackInst} instances={instances} />}
+          {instances.length > 1 && (
+            <SideBar trackFunc={trackInst} instances={instances} />
+          )}
         </div>
         <div id="mapDiv"></div>
       </div>

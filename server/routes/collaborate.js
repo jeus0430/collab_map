@@ -1,13 +1,14 @@
+const express = require("express")
 const ClientModel = require("../models/client")
 const { InstModel } = require("../models/insts")
 const axios = require("axios")
 const jwt = require("jsonwebtoken")
 const mongoose = require("mongoose")
 const _ = require("lodash")
-
 let connectedUsers = []
+const collaborater = express.Router()
 
-module.exports = (io) => async (client) => {
+const socketManager = (io) => async (client) => {
   const userId = new mongoose.Types.ObjectId(client.user._id)
   const clientId = new mongoose.Types.ObjectId(client.user._id)
   const username = client.user.username
@@ -195,7 +196,6 @@ reverseGeocode = async (lat, long) => {
     const resp = await axios.get(
       `http://api.positionstack.com/v1/reverse?access_key=8f697c298327c5dd7b2d8642933ffa09&query=${lat},${long}&fields=results.label,results.map_url&limit=1&output=json`
     )
-    console.log(resp.data.data[0].label)
     // return resp.data
     return resp.data.data[0].label
   } catch (ex) {
@@ -215,5 +215,16 @@ isValidRoom = async (userId, room) => {
   else return false
 }
 
-// reverseGeocode()
-// console.log('reverse geocode', reverseGeocode())
+collaborater.get("/forwardGeocode", async (req, res) => {
+  try {
+    const resp = await axios.get(
+      `http://api.positionstack.com/v1/forward?access_key=8f697c298327c5dd7b2d8642933ffa09&bbox_module=1&query=${req.query.place}`
+    )
+    console.log(">>>>>>", resp.data)
+    res.send(resp.data.data)
+  } catch (ex) {
+    return "undefined location"
+  }
+})
+
+module.exports = { socketManager, collaborater }

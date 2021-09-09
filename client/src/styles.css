@@ -798,7 +798,7 @@ th img {
 }
 /* Change cursor when over entire map */
 .leaflet-container {
-  /* cursor: crosshair !important; */
+  cursor: crosshair !important;
   /* width: 100%; */
   height: 100vh;
 }

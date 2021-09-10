@@ -17,7 +17,6 @@ class SideBar extends Component {
         path += "/collab/path-tool.svg"
         break
     }
-    console.log(path)
     return <img src={path} />
   }
 
@@ -28,7 +27,11 @@ class SideBar extends Component {
         {instances.map((k) => {
           return (
             <div key={k._id} className="mt-3 ms-2">
-              <div  style={{ cursor: 'pointer' }} onClick={ () => trackFunc(JSON.parse(k.center)) } className="d-flex align-items-center">
+              <div
+                style={{ cursor: "pointer" }}
+                onClick={() => trackFunc(JSON.parse(k.center))}
+                className="d-flex align-items-center"
+              >
                 <div className="flex-shrink-0">{this.renderIcon(k)}</div>
                 <div className="flex-grow-1 ms-2">
                   <p>

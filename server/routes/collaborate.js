@@ -62,7 +62,6 @@ const socketManager = (io) => async (client) => {
           users: connectedUsers,
           myInfo: "my_info",
         }
-        // console.log(io.of('/collaborate').sockets)
         client.to(room).emit("one-joined-room", connectedUsers)
         client.emit("load_data", return_val)
       })
@@ -220,7 +219,6 @@ collaborater.get("/forwardGeocode", async (req, res) => {
     const resp = await axios.get(
       `http://api.positionstack.com/v1/forward?access_key=8f697c298327c5dd7b2d8642933ffa09&bbox_module=1&query=${req.query.place}`
     )
-    console.log(">>>>>>", resp.data)
     res.send(resp.data.data)
   } catch (ex) {
     return "undefined location"

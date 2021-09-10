@@ -38,7 +38,6 @@ const Home = (props) => {
   const infoColor = useRef("#17a2b8")
   const toolbarDiv = useRef(null)
   const [socketLoaded, setSocketLoaded] = useState(false)
-
   // const [insts, setInsts] = useState([])
   // const [clientName, setClientName] = useState(null)
   // const [clients, setClients] = useState([])
@@ -535,14 +534,17 @@ const Home = (props) => {
 
     const cursorControler = L.Control.extend({
       options: {
-        position: "bottomleft",
+        position: "topright",
         // position: "topright",
       },
 
       onAdd: function () {
         const btn = L.DomUtil.create("div", "avatar")
+        const caretPath = process.env.PUBLIC_URL + "/collab/caret.svg"
         btn.title = hisNonce
-        btn.innerHTML = `<span>${hisNonce}<span>`
+        btn.innerHTML = `<span>${hisNonce
+          .charAt(0)
+          .toUpperCase()}<span><img style="width: 8px;margin-left: 2px" src="${caretPath}" />`
         // btn.title = "Hi"
         // btn.innerHTML = "<span>Hi</span>"
 
@@ -628,7 +630,7 @@ const Home = (props) => {
       inst.bindTooltip(
         '<label for="shape-name">Name</label><input id="shape-name" placeholder="title" name="shape-name" /><label for="shape-desc">Description</label><textarea placeholder="description" id="shape-desc" name="description"></textarea><br><div id="buttons"><button class="cancel-button" id="cancel-button">Cancel</button><button class="save-button" id="save-button">Save</button></div><div class="arrow-down"></div>',
         {
-          permanent: true,
+          permanent: false,
           direction: "auto",
           interactive: false,
           sticky: true,
@@ -903,7 +905,7 @@ const Home = (props) => {
         vicinity +
         '</span></h3></div><div class="arrow-down"></div>',
       {
-        permanent: true,
+        permanent: false,
         direction: "top",
         interactive: false,
         bubblingMouseEvents: false,
@@ -1079,6 +1081,9 @@ const Home = (props) => {
       })
       cursor_instance.addTo(map.current)
       users.current[hisNonce] = { nonce: hisNonce, cursor: cursor_instance }
+
+      const avatar_control = createAvatarControl(hisNonce)
+      avatar_control.addTo(map.current)
 
       // var avatar = snapshot.imgsrc;
       // $("#right-nav").prepend('<div id="profile" style="background:'+snapshot.color+'!important" class="avatars" data-id="'+key+'"><img src="'+avatar+'"></div>');

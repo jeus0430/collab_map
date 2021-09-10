@@ -64,6 +64,7 @@ class Login extends Component {
       return
     } else {
       userLoginRequest(this.state.userCredentials).then((res) => {
+        console.log("login result", res)
         if (res.data.result == "fail") {
           var error = {
             username: "Not correct",

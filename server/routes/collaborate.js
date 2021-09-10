@@ -207,6 +207,7 @@ isValidRoom = async (userId, room) => {
       clientName: 1,
     }
   )
+  console.log(dt)
   if (dt.clientName === room) return true
   else return false
 }

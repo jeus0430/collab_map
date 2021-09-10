@@ -53,6 +53,7 @@ const Home = (props) => {
     ;(async () => {
       if (!localStorage.getItem("_token")) {
         history.push("/login")
+        return
       }
       if (!socket.current) {
         socket.current = io(`${SERVER_URL}/collaborate`, {
@@ -74,7 +75,7 @@ const Home = (props) => {
         socket.current.on("logout", () => {
           console.log("logout recieved")
           socket.current.disconnect()
-          this.props.history.push("/login")
+          history.push("/login")
         })
 
         socket.current.on("load_data", (data) => {

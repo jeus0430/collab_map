@@ -10,7 +10,6 @@ const collaborater = express.Router()
 
 const socketManager = (io) => async (client) => {
   const userId = new mongoose.Types.ObjectId(client.user._id)
-  const clientId = new mongoose.Types.ObjectId(client.user._id)
   const username = client.user.username
   const room = client.handshake.query.client
   console.log("+++++++ room initialized for", client.user.username)
@@ -39,8 +38,6 @@ const socketManager = (io) => async (client) => {
           return
         } else {
           connectedUsers.push(userInfo)
-          return
-          // client.broadcast.emit('other-logged-in', connectedUsers);
         }
       }
     })

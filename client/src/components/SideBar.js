@@ -1,8 +1,8 @@
 import React, { Component } from "react"
-
+import { PUBLIC_URL } from "../../src/config"
 class SideBar extends Component {
   renderIcon(k) {
-    let path = process.env.PUBLIC_URL
+    let path = PUBLIC_URL
     switch (k.type) {
       case "marker":
         path += "/collab/marker-tool.svg"

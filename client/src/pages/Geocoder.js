@@ -1,12 +1,12 @@
 import { GeoSearchControl, OpenStreetMapProvider } from "leaflet-geosearch"
 import L from "leaflet"
 import "leaflet-geosearch/dist/geosearch.css"
-import config from "../config"
+import { SERVER_URL } from "../../src/config"
 import { VenueLocationIcon } from "../components/VenueLocationIcon"
 
 class MyProvider extends OpenStreetMapProvider {
   endpoint({ query, type }) {
-    return this.getUrl(`${config.SERVER_URL}/collaborate/forwardGeocode`, {
+    return this.getUrl(`${SERVER_URL}/collaborate/forwardGeocode`, {
       place: query,
     })
   }

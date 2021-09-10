@@ -1,17 +1,12 @@
 import React, { useRef, useEffect, useState } from "react"
 import L from "leaflet"
-import { Container, Row, Col } from "react-bootstrap"
 import SideBar from "../components/SideBar"
 import { VenueLocationIcon } from "../components/VenueLocationIcon"
-import { Redirect } from "react-router-dom"
 import { io } from "socket.io-client"
-import config from "../config"
-import crypto from "crypto"
-import { v5 as uuidv5, v4 as uuidv4 } from "uuid"
-import axios from "axios"
-import { useParams } from "react-router-dom"
+import { v4 as uuidv4 } from "uuid"
+import { useHistory } from "react-router"
 import Geocoder from "./Geocoder"
-
+import { PUBLIC_URL, SERVER_URL } from "../config"
 const Home = (props) => {
   //   const currentLocation = [51.52, -0.09]
   const currentLocation = [52.52, 13.405]
@@ -24,46 +19,29 @@ const Home = (props) => {
   const followCursor = useRef(null)
   const mousedown = useRef(false)
   const objects = useRef([])
-  const color = useRef("#634FF1")
   const currentInst = useRef(null)
   const toolbarEnabled = useRef(true)
   const socket = useRef(null)
-  const nonce = useRef(null)
   const users = useRef({})
-  // const oneUser = useRef({})
   const primaryColor = useRef("#007bff")
   const successColor = useRef("#28a745")
   const dangerColor = useRef("#dc3545")
   const warningColor = useRef("#ffc107")
   const infoColor = useRef("#17a2b8")
-  const toolbarDiv = useRef(null)
-  const [socketLoaded, setSocketLoaded] = useState(false)
-  // const [insts, setInsts] = useState([])
-  // const [clientName, setClientName] = useState(null)
-  // const [clients, setClients] = useState([])
-  // const [zoom, setzoom] = useState(13)
-  // const [dragable, setdragable] = useState(null)
-  // const [enteringdata, setenteringdata] = useState(false)
-  // const [dataloaded, setdataloaded] = useState(false)
-  // const [cursors, setcursors] = useState([])
-
   const [instances, setInstances] = useState([])
-  const [activeUsers, setActiveUsers] = useState([])
+  const history = useHistory()
 
   const waitForOpenConnection = () => {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       const intervalTime = 200 //ms
 
       const interval = setInterval(async () => {
         if (socket.current.connected) {
-          setSocketLoaded(true)
           clearInterval(interval)
           if (!map.current) {
             initMap()
             initToolbar()
             initEvents()
-            // const { data } = await axios.get(`${API}/inst/all`)
-            // importInsts(data)
           }
           resolve()
         }
@@ -73,9 +51,15 @@ const Home = (props) => {
 
   useEffect(() => {
     ;(async () => {
+      if (!localStorage.getItem("_token")) {
+        history.push("/login")
+      }
       if (!socket.current) {
-        socket.current = io(`${config.SERVER_URL}/collaborate`, {
-          query: { client: props.room, _token: localStorage.getItem("_token") },
+        socket.current = io(`${SERVER_URL}/collaborate`, {
+          query: {
+            client: props.room,
+            _token: localStorage.getItem("_token"),
+          },
           transports: ["websocket", "polling", "flashsocket"],
           auth: {
             token: localStorage.getItem("originalToken"),
@@ -89,14 +73,13 @@ const Home = (props) => {
 
         socket.current.on("logout", () => {
           console.log("logout recieved")
+          socket.current.disconnect()
+          this.props.history.push("/login")
         })
 
         socket.current.on("load_data", (data) => {
-          // console.log('load-data' , data.insts)
-          // console.log('users in room' , data.users)
           setInstances(data.insts)
           importInsts(data.insts)
-          setActiveUsers(data.users)
         })
 
         socket.current.onAny((event, ...args) => {
@@ -135,10 +118,6 @@ const Home = (props) => {
           if (inst) {
             if (inst.type) return inst.line.remove()
             else inst.marker.remove()
-            /*-- tried --- 
-                    if (inst.type == "marker") return console.log(inst) 
-                    else inst.line.remove()
-                  */
           }
         })
 
@@ -150,7 +129,6 @@ const Home = (props) => {
           const lat = Math.round(event.latlng.lat * 100000) / 100000
           const lng = Math.round(event.latlng.lng * 100000) / 100000
           socket.current.emit("one-moved-mouse", lat, lng, props.user.username)
-          // socket.current.emit("one-moved-mouse", lat, lng, nonce.current)
         })
 
         socket.current.on("my-created-inst", (inst) => {
@@ -208,7 +186,6 @@ const Home = (props) => {
     createCursorControl().addTo(map.current)
     map.current.addControl(Geocoder)
     map.current.on("geosearch/showlocation", (e) => {
-      console.log(e)
       map.current.panTo([e.location.x, e.location.y])
     })
     // createAvatarControl(props.user.username).addTo(map.current)
@@ -360,8 +337,7 @@ const Home = (props) => {
         const btn = L.DomUtil.create("div", "tool")
         btn.title = "Cursor"
         btn.setAttribute("id", "cursor-tool")
-        btn.innerHTML =
-          `<img src="` + process.env.PUBLIC_URL + `/collab/cursor-tool.svg">`
+        btn.innerHTML = `<img src="` + PUBLIC_URL + `/collab/cursor-tool.svg">`
         btn.classList.add("tool-active")
 
         btn.onmouseover = function () {
@@ -399,8 +375,7 @@ const Home = (props) => {
         const btn = L.DomUtil.create("div", "tool")
         btn.title = "Pen Tool"
         btn.setAttribute("id", "pen-tool")
-        btn.innerHTML =
-          `<img src="` + process.env.PUBLIC_URL + `/collab/pen-tool.svg">`
+        btn.innerHTML = `<img src="` + PUBLIC_URL + `/collab/pen-tool.svg">`
 
         btn.onmouseover = function () {
           if (toolbarEnabled.current) this.style.transform = "scale(1.3)"
@@ -434,8 +409,7 @@ const Home = (props) => {
         const btn = L.DomUtil.create("div", "tool")
         btn.title = "Eraser Tool"
         btn.setAttribute("id", "eraser-tool")
-        btn.innerHTML =
-          `<img src="` + process.env.PUBLIC_URL + `/collab/eraser-tool.svg">`
+        btn.innerHTML = `<img src="` + PUBLIC_URL + `/collab/eraser-tool.svg">`
 
         btn.onmouseover = function () {
           if (toolbarEnabled.current) this.style.transform = "scale(1.3)"
@@ -469,8 +443,7 @@ const Home = (props) => {
         const btn = L.DomUtil.create("div", "tool")
         btn.title = "Marker Tool"
         btn.setAttribute("id", "marker-tool")
-        btn.innerHTML =
-          `<img src="` + process.env.PUBLIC_URL + `/collab/marker-tool.svg">`
+        btn.innerHTML = `<img src="` + PUBLIC_URL + `/collab/marker-tool.svg">`
 
         btn.onmouseover = function () {
           if (toolbarEnabled.current) this.style.transform = "scale(1.3)"
@@ -504,8 +477,7 @@ const Home = (props) => {
         const btn = L.DomUtil.create("div", "tool")
         btn.title = "Path Tool"
         btn.setAttribute("id", "path-tool")
-        btn.innerHTML =
-          `<img src="` + process.env.PUBLIC_URL + `/collab/path-tool.svg">`
+        btn.innerHTML = `<img src="` + PUBLIC_URL + `/collab/path-tool.svg">`
 
         btn.onmouseover = function () {
           if (toolbarEnabled.current) this.style.transform = "scale(1.3)"
@@ -540,7 +512,7 @@ const Home = (props) => {
 
       onAdd: function () {
         const btn = L.DomUtil.create("div", "avatar")
-        const caretPath = process.env.PUBLIC_URL + "/collab/caret.svg"
+        const caretPath = PUBLIC_URL + "/collab/caret.svg"
         btn.title = hisNonce
         btn.innerHTML = `<span>${hisNonce
           .charAt(0)
@@ -592,8 +564,7 @@ const Home = (props) => {
         const btn = L.DomUtil.create("div", "tool")
         btn.title = "Area Tool"
         btn.setAttribute("id", "area-tool")
-        btn.innerHTML =
-          `<img src="` + process.env.PUBLIC_URL + `/collab/area-tool.svg">`
+        btn.innerHTML = `<img src="` + PUBLIC_URL + `/collab/area-tool.svg">`
 
         btn.onmouseover = function () {
           if (toolbarEnabled.current) this.style.transform = "scale(1.3)"
@@ -730,7 +701,7 @@ const Home = (props) => {
           "</h1><h2>" +
           desc +
           '</h2><div class="shape-data"><h3><img src="' +
-          process.env.PUBLIC_URL +
+          PUBLIC_URL +
           '/collab/marker-small-icon.svg">' +
           inst.marker.getLatLng().lat.toFixed(5) +
           ", " +
@@ -900,7 +871,7 @@ const Home = (props) => {
         "</h1><h2>" +
         desc +
         '</h2><div style="width: 250px;" class="shape-data"><h3><img src"=' +
-        process.env.PUBLIC_URL +
+        PUBLIC_URL +
         '/collab/marker-small-icon.svg"><span style="width: 220px;overflow-wrap: anywhere;">' +
         vicinity +
         '</span></h3></div><div class="arrow-down"></div>',
@@ -1008,7 +979,6 @@ const Home = (props) => {
   }
 
   const getNextId = () => {
-    // const { data } =  await axios.get(`${config.SERVER_URL}/client/me`)
     return uuidv4()
   }
 

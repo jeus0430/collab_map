@@ -1,7 +1,13 @@
 const express = require("express")
 const jwt = require("jsonwebtoken")
+const cors = require("cors")
 const port = 5000
 const app = express()
+app.use(
+  cors({
+    origin: "*",
+  })
+)
 const server = require("http").createServer(app)
 
 require("./startup/db")

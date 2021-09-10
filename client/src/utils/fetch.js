@@ -1,42 +1,42 @@
-import axios from 'axios';
-import config from '../config';
+import axios from "axios"
 
-const SERVER_URL = config.SERVER_URL;
+import { SERVER_URL } from "../config"
 
 const options = (data) => {
-    return {
-        headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('jwtToken'),
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        },
-        method: 'post',
-        body: JSON.stringify(data)
-    };
-};
-
+  return {
+    headers: {
+      Authorization: "Bearer " + localStorage.getItem("jwtToken"),
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    method: "post",
+    body: JSON.stringify(data),
+  }
+}
 
 function setJwt(jwt) {
-    axios.defaults.headers.common['x-auth-token'] = jwt ;
+  axios.defaults.headers.common["x-auth-token"] = jwt
 }
 
 function getJwt() {
-    return localStorage.getItem('originalToken');
+  return localStorage.getItem("originalToken")
 }
 
-setJwt(getJwt());
+setJwt(getJwt())
 
 export const userSignupRequest = (userSignUpDetails) => {
-    return axios.post(SERVER_URL + '/client/signup', userSignUpDetails)
-    .then(res => {
-        return res;
+  return axios
+    .post(SERVER_URL + "/client/signup", userSignUpDetails)
+    .then((res) => {
+      return res
     })
 }
 export const userLoginRequest = (userLoginDetails) => {
-    return axios.post(SERVER_URL+'/client/login', userLoginDetails)    
-    .then(res => {
-        localStorage.setItem("originalToken", res.headers["x-auth-token"]);
-        return res;
+  return axios
+    .post(SERVER_URL + "/client/login", userLoginDetails)
+    .then((res) => {
+      localStorage.setItem("originalToken", res.headers["x-auth-token"])
+      return res
     })
 }
 

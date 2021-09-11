@@ -180,6 +180,7 @@ const Home = (props) => {
     })
     document.getElementById("mapDiv").appendChild(geocoder.onAdd(thisMap))
     geocoder.on("result", (e) => {
+      console.trace("resulted", e)
       thisMap.panTo({ lng: e.result.center[0], lat: e.result.center[1] })
     })
     // thisMap.addControl(geocoder)

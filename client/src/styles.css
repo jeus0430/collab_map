@@ -179,8 +179,8 @@ body {
 /* Left sidebar */
 #sidebar {
   padding-left: 10px;
-  padding-top: 20px;
   background-color: #fff;
+  height: 100%;
   color: #555;
   overflow-y: auto;
   font-size: 12px;

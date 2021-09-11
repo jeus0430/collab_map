@@ -26,7 +26,7 @@ class SideBar extends Component {
       <div style={{ overflow: "auto" }}>
         {instances.map((k) => {
           return (
-            <div key={k._id} className="mt-3 ms-2">
+            <div key={k._id} className="mt-2 ms-2 mb-1">
               <div
                 style={{ cursor: "pointer" }}
                 onClick={() => trackFunc(JSON.parse(k.center))}

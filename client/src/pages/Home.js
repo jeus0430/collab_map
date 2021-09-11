@@ -1,14 +1,18 @@
 import React, { useRef, useEffect, useState } from "react"
 import L from "leaflet"
 import SideBar from "../components/SideBar"
+import "mapbox-gl/dist/mapbox-gl.css"
 import { VenueLocationIcon } from "../components/VenueLocationIcon"
 import { io } from "socket.io-client"
 import { v4 as uuidv4 } from "uuid"
 import { useHistory } from "react-router"
 import Geocoder from "./Geocoder"
 import { PUBLIC_URL, SERVER_URL } from "../config"
+import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder"
+import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css"
+import mapboxgl from "mapbox-gl"
+
 const Home = (props) => {
-  //   const currentLocation = [51.52, -0.09]
   const currentLocation = [52.52, 13.405]
   const map = useRef(null)
   const penciling = useRef(false)
@@ -144,11 +148,6 @@ const Home = (props) => {
       renderer: L.canvas({ tolerance: 10 }),
     }).setView(currentLocation, 13)
 
-    thisMap.setMaxBounds([
-      [84.67351256610522, -174.0234375],
-      [-58.995311187950925, 223.2421875],
-    ])
-
     L.tileLayer(
       "https://api.mapbox.com/styles/v1/mj-epsilon/ckn1s6a7n2eyi17prjy5els6g/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoibWotZXBzaWxvbiIsImEiOiJja24wcWV5eTcwcTY5MnZwazA0cTRxMTlwIn0.powZMmJIS2FoR4JY1DFSGg",
       {
@@ -173,7 +172,17 @@ const Home = (props) => {
       })
       .closeTooltip()
       .addTo(thisMap)
-
+    const geocoder = new MapboxGeocoder({
+      accessToken:
+        "pk.eyJ1IjoibWotZXBzaWxvbiIsImEiOiJja24wcWV5eTcwcTY5MnZwazA0cTRxMTlwIn0.powZMmJIS2FoR4JY1DFSGg",
+      mapboxgl: mapboxgl,
+      marker: false,
+    })
+    document.getElementById("mapDiv").appendChild(geocoder.onAdd(thisMap))
+    geocoder.on("result", (e) => {
+      thisMap.panTo({ lng: e.result.center[0], lat: e.result.center[1] })
+    })
+    // thisMap.addControl(geocoder)
     map.current = thisMap
     followCursor.current = thisfollowCursor
   }
@@ -185,10 +194,16 @@ const Home = (props) => {
     createEraserControl().addTo(map.current)
     createPenControl().addTo(map.current)
     createCursorControl().addTo(map.current)
-    map.current.addControl(Geocoder)
-    map.current.on("geosearch/showlocation", (e) => {
-      map.current.panTo([e.location.x, e.location.y])
-    })
+    // var geocoder = new ReactMapboxGl({
+    //   accessToken: mapboxgl.accessToken,
+    //   mapboxgl: mapboxgl,
+    //   marker: false,
+    // })
+    // geocoder.addTo(map.current)
+    // map.current.addControl(Geocoder)
+    // map.current.on("geosearch/showlocation", (e) => {
+    //   map.current.panTo([e.location.x, e.location.y])
+    // })
     // createAvatarControl(props.user.username).addTo(map.current)
   }
 
@@ -602,7 +617,7 @@ const Home = (props) => {
       inst.bindTooltip(
         '<label for="shape-name">Name</label><input id="shape-name" placeholder="title" name="shape-name" /><label for="shape-desc">Description</label><textarea placeholder="description" id="shape-desc" name="description"></textarea><br><div id="buttons"><button class="cancel-button" id="cancel-button">Cancel</button><button class="save-button" id="save-button">Save</button></div><div class="arrow-down"></div>',
         {
-          permanent: false,
+          permanent: true,
           direction: "auto",
           interactive: false,
           sticky: true,

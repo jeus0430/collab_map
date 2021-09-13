@@ -1072,7 +1072,6 @@ h3 img {
 
 .mapboxgl-ctrl-geocoder {
   z-index: 1001 !important;
-  right: 10px;
-  float: right;
+  margin-left: 50px;
   top: 10px;
 }

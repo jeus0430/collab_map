@@ -177,6 +177,7 @@ const Home = (props) => {
         "pk.eyJ1IjoibWotZXBzaWxvbiIsImEiOiJja24wcWV5eTcwcTY5MnZwazA0cTRxMTlwIn0.powZMmJIS2FoR4JY1DFSGg",
       mapboxgl: mapboxgl,
       marker: false,
+      flyTo: false,
     })
     document.getElementById("mapDiv").appendChild(geocoder.onAdd(thisMap))
     geocoder.on("result", (e) => {

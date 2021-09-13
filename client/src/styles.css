@@ -790,7 +790,7 @@ th img {
   display: none;
 }
 
-.leaflet-bottom.leaflet-left .leaflet-control {
+.leaflet-bottom.leaflet-right .leaflet-control {
   float: none;
 }
 /* Change cursor when mousing over clickable layer */
@@ -1055,10 +1055,10 @@ h3 img {
   border-radius: 5px;
 }
 
-.leaflet-bottom.leaflet-left {
+.leaflet-bottom.leaflet-right {
   position: absolute;
-  left: calc(calc(83% - 338px) / 2);
-  transform: translateX(calc(-50% + 338px));
+  right: calc(calc(83% - 338px) / 2);
+  transform: translateX(calc(50% - 338px));
   height: 48px;
   background-color: #fff;
   border-radius: 5px;
@@ -1074,4 +1074,9 @@ h3 img {
   z-index: 1001 !important;
   margin-left: 50px;
   top: 10px;
+}
+
+
+.leaflet-control-zoom  {
+  display: none;
 }

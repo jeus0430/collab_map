@@ -3,6 +3,7 @@ import L from "leaflet"
 import SideBar from "../components/SideBar"
 import "mapbox-gl/dist/mapbox-gl.css"
 import { VenueLocationIcon } from "../components/VenueLocationIcon"
+import { IndicatorIcon } from "../components/IndicatorIcon"
 import { io } from "socket.io-client"
 import { v4 as uuidv4 } from "uuid"
 import { useHistory } from "react-router"
@@ -20,6 +21,7 @@ const Home = (props) => {
   const markering = useRef(false)
   const pathing = useRef(false)
   const areaing = useRef(false)
+  const centerMarker = useRef(null)
   const followCursor = useRef(null)
   const mousedown = useRef(false)
   const objects = useRef([])
@@ -158,6 +160,11 @@ const Home = (props) => {
       }
     ).addTo(thisMap)
 
+    centerMarker.current = L.marker(currentLocation, {
+      icon: IndicatorIcon,
+      pane: "overlayPane"
+    }).addTo(thisMap)  
+
     let thisfollowCursor = L.marker([0, 0], {
       pane: "overlayPane",
       interactive: false,
@@ -183,7 +190,9 @@ const Home = (props) => {
     geocoder.on("result", (e) => {
       console.trace("resulted", e)
       thisMap.panTo({ lng: e.result.center[0], lat: e.result.center[1] })
+      centerMarker.current.setLatLng([e.result.center[1], e.result.center[0]])
     })
+    
     // thisMap.addControl(geocoder)
     map.current = thisMap
     followCursor.current = thisfollowCursor
@@ -348,7 +357,7 @@ const Home = (props) => {
   const createCursorControl = () => {
     const cursorController = L.Control.extend({
       options: {
-        position: "bottomleft",
+        position: "bottomright",
       },
 
       onAdd: function () {
@@ -386,7 +395,7 @@ const Home = (props) => {
   const createPenControl = () => {
     const penControler = L.Control.extend({
       options: {
-        position: "bottomleft",
+        position: "bottomright",
       },
 
       onAdd: function () {
@@ -420,7 +429,7 @@ const Home = (props) => {
   const createEraserControl = () => {
     const eraserControler = L.Control.extend({
       options: {
-        position: "bottomleft",
+        position: "bottomright",
       },
 
       onAdd: function () {
@@ -454,7 +463,7 @@ const Home = (props) => {
   const createMarkerControl = () => {
     const markerControler = L.Control.extend({
       options: {
-        position: "bottomleft",
+        position: "bottomright",
       },
 
       onAdd: function () {
@@ -488,7 +497,7 @@ const Home = (props) => {
   const createPathControl = () => {
     const pathControler = L.Control.extend({
       options: {
-        position: "bottomleft",
+        position: "bottomright",
       },
 
       onAdd: function () {
@@ -524,7 +533,7 @@ const Home = (props) => {
 
     const cursorControler = L.Control.extend({
       options: {
-        position: "topright",
+        position: "bottomleft",
         // position: "topright",
       },
 
@@ -598,7 +607,7 @@ const Home = (props) => {
         return btn
       },
     })
-    return new areaControler({ position: "bottomleft" })
+    return new areaControler({ position: "bottomright" })
   }
 
   const areaTool = () => {

@@ -3,6 +3,12 @@ import L from "leaflet"
 import SideBar from "../components/SideBar"
 import "mapbox-gl/dist/mapbox-gl.css"
 import { VenueLocationIcon } from "../components/VenueLocationIcon"
+import { AreaIcon } from "../components/AreaIcon"
+import { PathIcon } from "../components/PathIcon"
+import { PencilIcon } from "../components/PencilIcon"
+import { CursorIcon } from "../components/CursorIcon"
+import { EraserIcon } from "../components/EraserIcon"
+import { MarkerIcon } from "../components/MarkerIcon"
 import { IndicatorIcon } from "../components/IndicatorIcon"
 import { io } from "socket.io-client"
 import { v4 as uuidv4 } from "uuid"
@@ -23,6 +29,7 @@ const Home = (props) => {
   const areaing = useRef(false)
   const centerMarker = useRef(null)
   const followCursor = useRef(null)
+  const myCursor = useRef(null)
   const mousedown = useRef(false)
   const objects = useRef([])
   const currentInst = useRef(null)
@@ -136,6 +143,7 @@ const Home = (props) => {
           const lat = Math.round(event.latlng.lat * 100000) / 100000
           const lng = Math.round(event.latlng.lng * 100000) / 100000
           socket.current.emit("one-moved-mouse", lat, lng, props.user.username)
+          renderMouse(lat, lng)
         })
 
         socket.current.on("my-created-inst", (inst) => {
@@ -162,8 +170,8 @@ const Home = (props) => {
 
     centerMarker.current = L.marker(currentLocation, {
       icon: IndicatorIcon,
-      pane: "overlayPane"
-    }).addTo(thisMap)  
+      pane: "overlayPane",
+    }).addTo(thisMap)
 
     let thisfollowCursor = L.marker([0, 0], {
       pane: "overlayPane",
@@ -179,6 +187,11 @@ const Home = (props) => {
       })
       .closeTooltip()
       .addTo(thisMap)
+    let thisCursor = L.marker([0, 0], {
+      pane: "overlayPane",
+      interactive: false,
+      icon: CursorIcon,
+    }).addTo(thisMap)
     const geocoder = new MapboxGeocoder({
       accessToken:
         "pk.eyJ1IjoibWotZXBzaWxvbiIsImEiOiJja24wcWV5eTcwcTY5MnZwazA0cTRxMTlwIn0.powZMmJIS2FoR4JY1DFSGg",
@@ -188,14 +201,18 @@ const Home = (props) => {
     })
     document.getElementById("mapDiv").appendChild(geocoder.onAdd(thisMap))
     geocoder.on("result", (e) => {
-      console.trace("resulted", e)
       thisMap.panTo({ lng: e.result.center[0], lat: e.result.center[1] })
       centerMarker.current.setLatLng([e.result.center[1], e.result.center[0]])
     })
-    
+
     // thisMap.addControl(geocoder)
     map.current = thisMap
     followCursor.current = thisfollowCursor
+    myCursor.current = thisCursor
+  }
+
+  const renderMouse = (lat, lng) => {
+    myCursor.current.setLatLng([lat, lng])
   }
 
   const initToolbar = () => {
@@ -339,7 +356,7 @@ const Home = (props) => {
     pathing.current = false
     areaing.current = false
     followCursor.current.setLatLng([0, 0])
-
+    myCursor.current.setIcon(CursorIcon)
     const cursor_tool = L.DomUtil.get("cursor-tool")
     const pen_tool = L.DomUtil.get("pen-tool")
     const eraser_tool = L.DomUtil.get("eraser-tool")
@@ -417,6 +434,7 @@ const Home = (props) => {
             resetTool()
             setMapDragging(false)
             penciling.current = true
+            myCursor.current.setIcon(PencilIcon)
             btn.classList.add("tool-active")
           }
         }
@@ -451,6 +469,7 @@ const Home = (props) => {
             resetTool()
             setMapDragging(false)
             erasing.current = true
+            myCursor.current.setIcon(EraserIcon)
             btn.classList.add("tool-active")
           }
         }
@@ -485,6 +504,7 @@ const Home = (props) => {
             resetTool()
             setMapDragging(false)
             markering.current = true
+            myCursor.current.setIcon(MarkerIcon)
             btn.classList.add("tool-active")
           }
         }
@@ -571,6 +591,7 @@ const Home = (props) => {
     resetTool()
     setMapDragging(true)
     pathing.current = true
+    myCursor.current.setIcon(PathIcon)
     L.DomUtil.addClass(path_tool, "tool-active")
     map.current.doubleClickZoom.disable()
   }
@@ -615,6 +636,7 @@ const Home = (props) => {
     resetTool()
     setMapDragging(true)
     areaing.current = true
+    myCursor.current.setIcon(AreaIcon)
     L.DomUtil.addClass(area_tool, "tool-active")
     map.current.doubleClickZoom.disable()
   }

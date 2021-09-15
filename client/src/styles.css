@@ -794,8 +794,8 @@ th img {
   float: none;
 }
 /* Change cursor when mousing over clickable layer */
-.leaflet-clickable {
-  cursor: crosshair !important;
+.leaflet-container {
+  cursor: none !important;
 }
 /* Change cursor when over entire map */
 .leaflet-container {
@@ -1076,7 +1076,6 @@ h3 img {
   top: 10px;
 }
 
-
-.leaflet-control-zoom  {
+.leaflet-control-zoom {
   display: none;
 }

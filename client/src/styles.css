@@ -794,8 +794,8 @@ th img {
   float: none;
 }
 /* Change cursor when mousing over clickable layer */
-.leaflet-container {
-  cursor: none !important;
+#mapDiv {
+  cursor: default;
 }
 /* Change cursor when over entire map */
 .leaflet-container {

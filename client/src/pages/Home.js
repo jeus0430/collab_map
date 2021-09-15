@@ -191,7 +191,9 @@ const Home = (props) => {
       pane: "overlayPane",
       interactive: false,
       icon: CursorIcon,
-    }).addTo(thisMap)
+    })
+      .setOpacity(0)
+      .addTo(thisMap)
     const geocoder = new MapboxGeocoder({
       accessToken:
         "pk.eyJ1IjoibWotZXBzaWxvbiIsImEiOiJja24wcWV5eTcwcTY5MnZwazA0cTRxMTlwIn0.powZMmJIS2FoR4JY1DFSGg",
@@ -356,7 +358,9 @@ const Home = (props) => {
     pathing.current = false
     areaing.current = false
     followCursor.current.setLatLng([0, 0])
-    myCursor.current.setIcon(CursorIcon)
+    myCursor.current.setOpacity(0)
+    document.getElementsByClassName("leaflet-container")[0].style.cursor =
+      "default"
     const cursor_tool = L.DomUtil.get("cursor-tool")
     const pen_tool = L.DomUtil.get("pen-tool")
     const eraser_tool = L.DomUtil.get("eraser-tool")
@@ -434,7 +438,10 @@ const Home = (props) => {
             resetTool()
             setMapDragging(false)
             penciling.current = true
-            myCursor.current.setIcon(PencilIcon)
+            myCursor.current.setIcon(PencilIcon).setOpacity(1)
+            document.getElementsByClassName(
+              "leaflet-container"
+            )[0].style.cursor = "none"
             btn.classList.add("tool-active")
           }
         }
@@ -469,7 +476,10 @@ const Home = (props) => {
             resetTool()
             setMapDragging(false)
             erasing.current = true
-            myCursor.current.setIcon(EraserIcon)
+            myCursor.current.setIcon(EraserIcon).setOpacity(1)
+            document.getElementsByClassName(
+              "leaflet-container"
+            )[0].style.cursor = "none"
             btn.classList.add("tool-active")
           }
         }
@@ -504,7 +514,10 @@ const Home = (props) => {
             resetTool()
             setMapDragging(false)
             markering.current = true
-            myCursor.current.setIcon(MarkerIcon)
+            myCursor.current.setIcon(MarkerIcon).setOpacity(1)
+            document.getElementsByClassName(
+              "leaflet-container"
+            )[0].style.cursor = "none"
             btn.classList.add("tool-active")
           }
         }
@@ -591,7 +604,9 @@ const Home = (props) => {
     resetTool()
     setMapDragging(true)
     pathing.current = true
-    myCursor.current.setIcon(PathIcon)
+    myCursor.current.setIcon(PathIcon).setOpacity(1)
+    document.getElementsByClassName("leaflet-container")[0].style.cursor =
+      "none"
     L.DomUtil.addClass(path_tool, "tool-active")
     map.current.doubleClickZoom.disable()
   }
@@ -636,7 +651,9 @@ const Home = (props) => {
     resetTool()
     setMapDragging(true)
     areaing.current = true
-    myCursor.current.setIcon(AreaIcon)
+    myCursor.current.setIcon(AreaIcon).setOpacity(1)
+    document.getElementsByClassName("leaflet-container")[0].style.cursor =
+      "none"
     L.DomUtil.addClass(area_tool, "tool-active")
     map.current.doubleClickZoom.disable()
   }

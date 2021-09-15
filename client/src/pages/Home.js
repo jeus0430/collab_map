@@ -829,8 +829,6 @@ const Home = (props) => {
   const saveMarker = (name, desc) => {
     var inst = currentInst.current
 
-    //https://positionstack.com/quickstart
-
     const nextID = getNextId()
     objects.current.push({
       id: nextID,
@@ -846,6 +844,13 @@ const Home = (props) => {
       desc,
       nextID
     )
+
+    inst.marker.on("click", function () {
+      if (erasing.current) {
+        inst.marker.remove()
+        socket.current.emit("one-erased-instance", nextID)
+      }
+    })
   }
 
   const savePencil = (name, desc) => {

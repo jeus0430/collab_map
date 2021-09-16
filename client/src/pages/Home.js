@@ -1055,8 +1055,10 @@ const Home = (props) => {
   }
 
   const bindErasingAction = (inst, instID) => {
-    inst.on("mouseover", function () {
+    inst.on("mouseover", function (e) {
       if (erasing.current) {
+        console.log(e.target)
+        // e.target.style.cursor = "none"
         inst.setStyle({ opacity: 0.3 })
       }
     })

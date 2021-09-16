@@ -1110,7 +1110,3 @@ h3 img {
 .leaflet-bottom.leaflet-right {
   cursor: pointer;
 }
-
-.leaflet-interactive {
-  cursor: url("../src/components/collab/eraser-tool.svg"), auto !important;
-}

@@ -1084,29 +1084,31 @@ h3 img {
 .cursor-none:hover {
   cursor: crosshair !important;
 }
-#mapDiv {
-  cursor: crosshair;
+.leaflet-bottom.leaflet-right {
+  cursor: default;
 }
-.cursor-pen {
+#mapDiv {
+  cursor: default;
+}
+#mapDiv.cursor-pen {
   cursor: url("../src/components/collab/pen-tool.svg"), auto !important;
 }
 
-.cursor-eraser {
+#mapDiv.cursor-eraser {
   cursor: url("../src/components/collab/eraser-tool.svg"), auto !important;
 }
 
-.cursor-path {
+#mapDiv.cursor-path {
   cursor: url("../src/components/collab/path-tool.svg"), auto !important;
 }
 
-.cursor-area {
+#mapDiv.cursor-area {
   cursor: url("../src/components/collab/area-tool.svg"), auto !important;
 }
 
-.cursor-marker {
+#mapDiv.cursor-marker {
   cursor: url("../src//components/collab/marker-small-icon.svg"), auto !important;
 }
-
-.leaflet-bottom.leaflet-right {
-  cursor: pointer;
+.leaflet-interactive {
+  cursor: inherit !important;
 }

@@ -339,15 +339,7 @@ const Home = (props) => {
     pathing.current = false
     areaing.current = false
     followCursor.current.setLatLng([0, 0])
-    document
-      .getElementById("mapDiv")
-      .classList.remove(
-        "cursor-pen",
-        "cursor-area",
-        "cursor-path",
-        "cursor-marker",
-        "cursor-eraser"
-      )
+
     const cursor_tool = L.DomUtil.get("cursor-tool")
     const pen_tool = L.DomUtil.get("pen-tool")
     const eraser_tool = L.DomUtil.get("eraser-tool")
@@ -397,6 +389,15 @@ const Home = (props) => {
     resetTool()
     const cursor_tool = L.DomUtil.get("cursor-tool")
     L.DomUtil.addClass(cursor_tool, "tool-active")
+    document
+      .getElementById("mapDiv")
+      .classList.remove(
+        "cursor-pen",
+        "cursor-area",
+        "cursor-path",
+        "cursor-marker",
+        "cursor-eraser"
+      )
     setMapDragging(true)
   }
 
@@ -425,7 +426,17 @@ const Home = (props) => {
             resetTool()
             setMapDragging(false)
             penciling.current = true
+            document
+              .getElementById("mapDiv")
+              .classList.remove(
+                "cursor-pen",
+                "cursor-area",
+                "cursor-path",
+                "cursor-marker",
+                "cursor-eraser"
+              )
             document.getElementById("mapDiv").classList.add("cursor-pen")
+
             btn.classList.add("tool-active")
           }
         }
@@ -460,7 +471,17 @@ const Home = (props) => {
             resetTool()
             setMapDragging(false)
             erasing.current = true
+            document
+              .getElementById("mapDiv")
+              .classList.remove(
+                "cursor-pen",
+                "cursor-area",
+                "cursor-path",
+                "cursor-marker",
+                "cursor-eraser"
+              )
             document.getElementById("mapDiv").classList.add("cursor-eraser")
+
             btn.classList.add("tool-active")
           }
         }
@@ -495,6 +516,15 @@ const Home = (props) => {
             resetTool()
             setMapDragging(false)
             markering.current = true
+            document
+              .getElementById("mapDiv")
+              .classList.remove(
+                "cursor-pen",
+                "cursor-area",
+                "cursor-path",
+                "cursor-marker",
+                "cursor-eraser"
+              )
             document.getElementById("mapDiv").classList.add("cursor-marker")
             btn.classList.add("tool-active")
           }
@@ -582,6 +612,15 @@ const Home = (props) => {
     resetTool()
     setMapDragging(true)
     pathing.current = true
+    document
+      .getElementById("mapDiv")
+      .classList.remove(
+        "cursor-pen",
+        "cursor-area",
+        "cursor-path",
+        "cursor-marker",
+        "cursor-eraser"
+      )
     document.getElementById("mapDiv").classList.add("cursor-path")
     L.DomUtil.addClass(path_tool, "tool-active")
     map.current.doubleClickZoom.disable()
@@ -942,7 +981,6 @@ const Home = (props) => {
   const importPencil = (points, name, desc, instID, center) => {
     var line = L.polyline(points, {
       color: primaryColor.current,
-      className: "cursor-pencil",
     })
     // line.bindTooltip(
     //   "<h1>" +
